@@ -136,8 +136,8 @@ function structureJSON(key, value) {
   keyTag.classList.add('rf-row');
   keyTag.classList.add('rf-row--collapse');
   keyTag.addEventListener('click', (event) => {
-    event.target.querySelector('.rf-collapse').classList.toggle('rf-collapse--open');
-    event.target.parentNode.querySelector('.rf-content').classList.toggle('rf-content--close');
+    event.target.querySelector('.rf-collapse')?.classList.toggle('rf-collapse--open');
+    event.target.parentNode.querySelector('.rf-content')?.classList.toggle('rf-content--close');
   })
   columnTag.appendChild(keyTag);
   return columnTag;
@@ -153,8 +153,8 @@ function structureArray(key, value) {
   keyTag.classList.add('rf-row');
   keyTag.classList.add('rf-row--collapse');
   keyTag.addEventListener('click', (event) => {
-    event.target.querySelector('.rf-collapse').classList.toggle('rf-collapse--open');
-    event.target.parentNode.querySelector('.rf-content').classList.toggle('rf-content--close');
+    event.target.querySelector('.rf-collapse')?.classList.toggle('rf-collapse--open');
+    event.target.parentNode.querySelector('.rf-content')?.classList.toggle('rf-content--close');
   })
   columnTag.appendChild(keyTag);
   return columnTag;
