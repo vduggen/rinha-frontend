@@ -4,8 +4,8 @@ function openUpload() {
 
 function changeTab(contentFile) {
   document.getElementById("home").style.display = "none";
-  document.getElementById("read").style.display = "flex";
-  createStructure(document.getElementById("read"));
+  document.getElementById("json-tree").style.display = "flex";
+  createStructure(document.getElementById("json-tree"));
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
           changeTab(fileReader.result);
           renderTreeView(JSON.parse(fileReader.result));
         };
-        document.querySelector(".rf-main #read .rf-title").innerText =
+        document.querySelector(".rf-main #json-tree .rf-title").innerText =
           e.target.files[0].name;
         fileReader.readAsText(e.target.files[0]);
       });

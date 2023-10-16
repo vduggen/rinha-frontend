@@ -1,46 +1,46 @@
-.rf-main #read {
+.rf-main #json-tree {
   display: none;
   max-width: 400px;
   align-items: flex-start;
   margin: 0 auto;
 }
 
-.rf-main #read .rf-content {
+.rf-main #json-tree .rf-content {
   padding-left: 16px;
   margin: 5px 0 5px 2px;
   border-left: 1px solid #bfbfbf;
 }
 
-.rf-main #read .rf-attribute {
+.rf-main #json-tree .rf-attribute {
   display: flex;
   column-gap: 8px;
   color: #4e9590;
 }
 
-.rf-main #read .rf-attribute--column {
+.rf-main #json-tree .rf-attribute--column {
   flex-direction: column;
 }
 
-.rf-main #read .rf-attribute .rf-scope .rf-content,
-.rf-main #read .rf-content--column {
+.rf-main #json-tree .rf-attribute .rf-scope .rf-content,
+.rf-main #json-tree .rf-content--column {
   display: flex;
   flex-direction: column;
 }
 
-.rf-main #read .rf-key--row {
+.rf-main #json-tree .rf-key--row {
   display: flex;
   column-gap: 8px;
 }
 
-.rf-main #read .rf-value {
+.rf-main #json-tree .rf-value {
   color: #000;
 }
 
-.rf-main #read .rf-title {
+.rf-main #json-tree .rf-title {
   font-size: 32px;
   margin-bottom: 10px;
 }
 
-.rf-main #read .rf-bracket {
+.rf-main #json-tree .rf-bracket {
   color: #f2cab8;
 }

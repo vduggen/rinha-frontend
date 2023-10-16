@@ -7,7 +7,7 @@
 }
 
 .rf-main #home,
-.rf-main #read {
+.rf-main #json-tree {
   height: 100vh;
   display: flex;
   align-items: center;

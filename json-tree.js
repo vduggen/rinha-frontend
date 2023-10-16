@@ -137,6 +137,6 @@ function renderTreeView(json) {
       attributeTag.appendChild(valueTag);
     }
 
-    document.querySelector("#read > .rf-content").appendChild(attributeTag);
+    document.querySelector("#json-tree > .rf-content").appendChild(attributeTag);
   }
 }
