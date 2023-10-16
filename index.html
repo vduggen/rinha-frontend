@@ -147,14 +147,6 @@
 
         <div id="read">
             <div class="rf-title"></div>
-
-            <div class="rf-bracket">
-                {
-            </div>
-            <div class="rf-content"></div>
-            <div class="rf-bracket">
-                }
-            </div>
         </div>
     </main>
 
@@ -218,7 +210,7 @@
             },
             JSON: {
                 open: "{",
-                close: "{"
+                close: "}"
             },
         };
 
@@ -262,13 +254,12 @@
             return scopeTag;
         }
 
-        function createStructure(bracketType = bracketsTypes.JSON, contentTag) {
-            const scopeTag = createScopeTag();
-            const objBracketArray = createBracket(bracketType);
-            scopeTag.appendChild(objBracketArray.bracketArrayOpenTag);
-            scopeTag.appendChild(contentTag);
-            scopeTag.appendChild(objBracketArray.bracketArrayCloseTag);
-            return scopeTag;
+        function createStructure(attributeTag, bracketType = bracketsTypes.JSON) {
+            const objBreacket = createBracket(bracketType);
+            attributeTag.appendChild(objBreacket.bracketArrayOpenTag);
+            const contentTag = createContentTag();
+            attributeTag.appendChild(contentTag);
+            attributeTag.appendChild(objBreacket.bracketArrayCloseTag);
         }
 
         function renderTreeView(json) {
@@ -313,6 +304,7 @@
         function changeTab(contentFile) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('read').style.display = 'flex';
+            createStructure(document.getElementById('read'));
         }
 
         document.getElementById('rf-upload').addEventListener('change', async (e) => {
