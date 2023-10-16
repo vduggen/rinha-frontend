@@ -92,51 +92,80 @@ function createScopeTag() {
 }
 
 function createStructure(attributeTag, bracketType = bracketsTypes.JSON) {
+  const scopeTag = createScopeTag();
   const objBreacket = createBracket(bracketType);
-  attributeTag.appendChild(objBreacket.bracketArrayOpenTag);
+  scopeTag.appendChild(objBreacket.bracketArrayOpenTag);
   const contentTag = createContentTag();
-  attributeTag.appendChild(contentTag);
-  attributeTag.appendChild(objBreacket.bracketArrayCloseTag);
+  scopeTag.appendChild(contentTag);
+  scopeTag.appendChild(objBreacket.bracketArrayCloseTag);
+  attributeTag.appendChild(scopeTag);
+  return {
+    contentTag
+  }
 }
 
-function renderTreeView(json) {
-  for (const node in json) {
-    let attributeTag = null;
-    if (Array.isArray(json[node])) {
-      attributeTag = createAttributeTag(true);
-      const keyTag = createKeyTag(node, true);
-      // const collapseTag = createCollapse();
-      // keyTag.prepend(collapseTag);
-      attributeTag.appendChild(keyTag);
-      const bracketOpenTag = createBracketOpen(bracketsTypes.ARRAY);
-      keyTag.appendChild(bracketOpenTag);
+function createRowTag() {
+  const rowTag = document.createElement('div');
+  rowTag.classList.add('rf-row')
+  return rowTag;
+}
 
-      const valueTag = document.createElement("div");
-      valueTag.classList.add("rf-attribute--column");
+function createColumnTag() {
+  const rowTag = document.createElement('div');
+  rowTag.classList.add('rf-column')
+  return rowTag;
+}
 
-      const contentTag = createContentTag(true);
-      for (const nodeArray of json[node]) {
-        if (
-          typeof nodeArray !== "object" &&
-          Array.isArray(nodeArray) === false
-        ) {
-          const valueTag = createValueTag(nodeArray);
-          contentTag.appendChild(valueTag);
-        }
-      }
-      valueTag.appendChild(contentTag);
+function structureBase(key, value) {
+  const rowTag = createRowTag();
+  const keyTag = createKeyTag(key);
+  rowTag.appendChild(keyTag);
+  const valueTag = createValueTag(value);
+  rowTag.appendChild(valueTag);
+  return rowTag;
+}
+
+function structureJSON(key, value) {
+  const columnTag = createColumnTag();
+  const keyTag = createKeyTag(key);
+  const bracketOpenTag = createBracketOpen();
+  keyTag.appendChild(bracketOpenTag);
+  keyTag.classList.add('rf-row');
+  columnTag.appendChild(keyTag);
+  return columnTag;
+}
+
+function structureArray(key, value) {
+  const columnTag = createColumnTag();
+  const keyTag = createKeyTag(key);
+  const bracketOpenTag = createBracketOpen(bracketsTypes.ARRAY);
+  keyTag.appendChild(bracketOpenTag);
+  keyTag.classList.add('rf-row');
+  columnTag.appendChild(keyTag);
+  return columnTag;
+}
+
+function renderJsonTree(json, contentTag) {
+  for (const key in json) {
+    let value = json[key];
+    let rowTag = null;
+    if (Array.isArray(value) === true) {
+      rowTag = structureArray(key);
+      const contentTag = createContentTag();
+      renderJsonTree(value, contentTag);
+      rowTag.appendChild(contentTag);
       const bracketCloseTag = createBracketClose(bracketsTypes.ARRAY);
-      valueTag.appendChild(bracketCloseTag);
-      attributeTag.appendChild(valueTag);
-      // const scopeTag = createStructure(bracketsTypes.ARRAY, contentTag);
+      rowTag.appendChild(bracketCloseTag);
+    } else if (typeof value === 'object' && value !== null) {
+      rowTag = structureJSON(key);
+      const contentTag = createContentTag();
+      renderJsonTree(value, contentTag);
+      rowTag.appendChild(contentTag);
+      const bracketCloseTag = createBracketClose();
+      rowTag.appendChild(bracketCloseTag);
     } else {
-      attributeTag = createAttributeTag();
-      const keyTag = createKeyTag(node);
-      attributeTag.appendChild(keyTag);
-      const valueTag = createValueTag(json[node]);
-      attributeTag.appendChild(valueTag);
+      rowTag = structureBase(key, value);
     }
-
-    document.querySelector("#json-tree > .rf-content").appendChild(attributeTag);
+    contentTag.appendChild(rowTag);
   }
 }

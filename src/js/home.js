@@ -13,19 +13,20 @@ function openUpload() {
 function changeTab() {
   document.getElementById("home").style.display = "none";
   document.getElementById("json-tree").style.display = "flex";
-  createStructure(document.getElementById("json-tree"));
 }
 
 function loadFileReader(fileReader) {
+  let jsonParsed = {};
   try {
-    JSON.parse(fileReader.result);
+    jsonParsed = JSON.parse(fileReader.result);
   } catch (e) {
     console.log(e);
     document.getElementById("rf-error").classList.remove("rf-error--hidden");
     return false;
   }
   changeTab(fileReader.result);
-  renderTreeView(JSON.parse(fileReader.result));
+  const objStructure = createStructure(document.getElementById("json-tree"));
+  renderJsonTree(jsonParsed, objStructure.contentTag);
 }
 
 function setTitle(nameFile) {

@@ -11,14 +11,30 @@
   border-left: 1px solid #bfbfbf;
 }
 
+.rf-main #json-tree .rf-key,
 .rf-main #json-tree .rf-attribute {
+  color: #4e9590;
+}
+
+.rf-main #json-tree .rf-attribute,
+.rf-main #json-tree .rf-row {
   display: flex;
   column-gap: 8px;
-  color: #4e9590;
+}
+
+.rf-main #json-tree .rf-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .rf-main #json-tree .rf-attribute--column {
   flex-direction: column;
+}
+
+
+.rf-main #json-tree .rf-scope {
+  overflow: auto;
+  height: 100%;
 }
 
 .rf-main #json-tree .rf-attribute .rf-scope .rf-content,
