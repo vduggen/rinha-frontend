@@ -91,14 +91,31 @@
             margin: 0 auto;
         }
 
-        .rf-main #read #rf-content {
-            margin-left: 18px;
+        .rf-main #read .rf-content {
+            padding-left: 16px;
+            margin: 5px 0 5px 2px;
+            border-left: 1px solid #BFBFBF;
         }
 
         .rf-main #read .rf-attribute {
             display: flex;
             column-gap: 8px;
             color: #4E9590;
+        }
+
+        .rf-main #read .rf-attribute--column {
+            flex-direction: column;
+        }
+
+        .rf-main #read .rf-attribute .rf-scope .rf-content,
+        .rf-main #read .rf-content--column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rf-main #read .rf-key--row {
+            display: flex;
+            column-gap: 8px;
         }
 
         .rf-main #read .rf-value {
@@ -134,9 +151,7 @@
             <div class="rf-bracket">
                 {
             </div>
-            <div id="rf-content">
-
-            </div>
+            <div class="rf-content"></div>
             <div class="rf-bracket">
                 }
             </div>
@@ -154,15 +169,31 @@
             return `${timestamp}-${randomNum}`;
         }
 
-        function createAttributeTag() {
+        function createAttributeTag(isColumn = false) {
             const attributeTag = document.createElement('div');
-            attributeTag.classList.add('rf-attribute');
+            let classname = 'rf-attribute';
+            attributeTag.classList.add(classname);
+            if (isColumn === true) {
+                classname += '--column'
+            }
+            attributeTag.classList.add(classname);
             return attributeTag;
         }
 
-        function createKeyTag(text) {
+        function createCollapse() {
+            const collapseTag = document.createElement('div');
+            collapseTag.classList.add('rf-collapse');
+            collapseTag.innerHTML = '&#9656';
+            return collapseTag;
+        }
+
+        function createKeyTag(text, isRow = false) {
             const keyTag = document.createElement('span');
-            keyTag.classList.add('rf-key');
+            let classname = 'rf-key';
+            if (isRow === true) {
+                classname += '--row';
+            }
+            keyTag.classList.add(classname);
             keyTag.innerText = `${text}:`;
             return keyTag;
         }
@@ -174,23 +205,108 @@
             if (typeof text === "string") {
                 textFormatted = `"${text}"`
             }
-            valueTag.innerText = `${textFormatted}`;
+            valueTag.innerText = `${textFormatted},`;
             return valueTag;
         }
 
         let beforeElement = null;
 
+        const bracketsTypes = {
+            ARRAY: {
+                open: "[",
+                close: "]"
+            },
+            JSON: {
+                open: "{",
+                close: "{"
+            },
+        };
+
+        function createBracketOpen(bracketType = bracketsTypes.JSON) {
+            const bracketArrayOpenTag = document.createElement('div');
+            bracketArrayOpenTag.innerText = bracketType.open;
+            bracketArrayOpenTag.classList.add('rf-bracket');
+            return bracketArrayOpenTag;
+        }
+
+        function createBracketClose(bracketType = bracketsTypes.JSON) {
+            const bracketArrayCloseTag = document.createElement('div');
+            bracketArrayCloseTag.innerText = bracketType.close;
+            bracketArrayCloseTag.classList.add('rf-bracket');
+            return bracketArrayCloseTag;
+        }
+
+        function createBracket(bracketType = bracketsTypes.JSON) {
+            const bracketArrayOpenTag = createBracketOpen();
+            const bracketArrayCloseTag = createBracketClose();
+            return {
+                bracketArrayOpenTag,
+                bracketArrayCloseTag
+            }
+        }
+
+        function createContentTag(isColumn = false) {
+            const contentTag = document.createElement('div');
+            let classname = 'rf-content';
+            contentTag.classList.add(classname);
+            if (isColumn === true) {
+                classname += '--column'
+            }
+            contentTag.classList.add(classname);
+            return contentTag;
+        }
+
+        function createScopeTag() {
+            const scopeTag = document.createElement('div');
+            scopeTag.classList.add('rf-scope');
+            return scopeTag;
+        }
+
+        function createStructure(bracketType = bracketsTypes.JSON, contentTag) {
+            const scopeTag = createScopeTag();
+            const objBracketArray = createBracket(bracketType);
+            scopeTag.appendChild(objBracketArray.bracketArrayOpenTag);
+            scopeTag.appendChild(contentTag);
+            scopeTag.appendChild(objBracketArray.bracketArrayCloseTag);
+            return scopeTag;
+        }
+
         function renderTreeView(json) {
             for (const node in json) {
-                const attributeTag = createAttributeTag();
-                
-                const keyTag = createKeyTag(node);
-                const valueTag = createValueTag(json[node]);
+                let attributeTag = null;
+                if (Array.isArray(json[node])) {
+                    attributeTag = createAttributeTag(true);
+                    const keyTag = createKeyTag(node, true);
+                    // const collapseTag = createCollapse();
+                    // keyTag.prepend(collapseTag);
+                    attributeTag.appendChild(keyTag);
+                    const bracketOpenTag = createBracketOpen(bracketsTypes.ARRAY);
+                    keyTag.appendChild(bracketOpenTag);
 
-                attributeTag.appendChild(keyTag);
-                attributeTag.appendChild(valueTag);
+                    const valueTag = document.createElement('div');
+                    valueTag.classList.add('rf-attribute--column');
 
-                document.querySelector('#read #rf-content').appendChild(attributeTag);
+                    const contentTag = createContentTag(true);
+                    for (const nodeArray of json[node]) {
+                        if (typeof nodeArray !== "object" && Array.isArray(nodeArray) === false) {
+                            const valueTag = createValueTag(nodeArray);
+                            contentTag.appendChild(valueTag);
+                        }
+                    }
+                    valueTag.appendChild(contentTag);
+                    const bracketCloseTag = createBracketClose(bracketsTypes.ARRAY);
+                    valueTag.appendChild(bracketCloseTag);
+                    attributeTag.appendChild(valueTag);
+                    // const scopeTag = createStructure(bracketsTypes.ARRAY, contentTag);
+                } else {
+                    attributeTag = createAttributeTag();
+                    const keyTag = createKeyTag(node);
+                    attributeTag.appendChild(keyTag);
+                    const valueTag = createValueTag(json[node]);
+                    attributeTag.appendChild(valueTag);
+                }
+
+                document.querySelector('#read > .rf-content').appendChild(attributeTag);
             }
         }
 
