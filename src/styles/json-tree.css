@@ -1,6 +1,6 @@
 .rf-main #json-tree {
   display: none;
-  max-width: 400px;
+  max-width: 850px;
   align-items: flex-start;
   margin: 0 auto;
 }
@@ -9,6 +9,11 @@
   padding-left: 16px;
   margin: 5px 0 5px 2px;
   border-left: 1px solid #bfbfbf;
+}
+
+.rf-main #json-tree .rf-content--close {
+  overflow: hidden;
+  height: 0;
 }
 
 .rf-main #json-tree .rf-key,
@@ -20,6 +25,24 @@
 .rf-main #json-tree .rf-row {
   display: flex;
   column-gap: 8px;
+  padding: 2px;
+  cursor: default;
+}
+
+.rf-main #json-tree .rf-row--collapse {
+  cursor: pointer;
+}
+
+.rf-main #json-tree .rf-row--collapse .rf-collapse {
+  transition: ease-in-out .2s;
+}
+
+.rf-main #json-tree .rf-row--collapse .rf-collapse--open {
+  transform: rotate(90deg);
+}
+
+.rf-main #json-tree .rf-row:hover {
+  background-color: #bfbfbf50;
 }
 
 .rf-main #json-tree .rf-column {
@@ -34,6 +57,7 @@
 
 .rf-main #json-tree .rf-scope {
   overflow: auto;
+  width: 100%;
   height: 100%;
 }
 

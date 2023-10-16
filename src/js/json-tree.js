@@ -12,7 +12,8 @@ function createAttributeTag(isColumn = false) {
 function createCollapse() {
   const collapseTag = document.createElement("div");
   collapseTag.classList.add("rf-collapse");
-  collapseTag.innerHTML = "&#9656";
+  collapseTag.classList.add("rf-collapse--open");
+  collapseTag.innerText = "▶";
   return collapseTag;
 }
 
@@ -128,9 +129,16 @@ function structureBase(key, value) {
 function structureJSON(key, value) {
   const columnTag = createColumnTag();
   const keyTag = createKeyTag(key);
+  const collapseTag = createCollapse();
+  keyTag.prepend(collapseTag);
   const bracketOpenTag = createBracketOpen();
   keyTag.appendChild(bracketOpenTag);
   keyTag.classList.add('rf-row');
+  keyTag.classList.add('rf-row--collapse');
+  keyTag.addEventListener('click', (event) => {
+    event.target.querySelector('.rf-collapse').classList.toggle('rf-collapse--open');
+    event.target.parentNode.querySelector('.rf-content').classList.toggle('rf-content--close');
+  })
   columnTag.appendChild(keyTag);
   return columnTag;
 }
@@ -138,9 +146,16 @@ function structureJSON(key, value) {
 function structureArray(key, value) {
   const columnTag = createColumnTag();
   const keyTag = createKeyTag(key);
+  const collapseTag = createCollapse();
+  keyTag.prepend(collapseTag);
   const bracketOpenTag = createBracketOpen(bracketsTypes.ARRAY);
   keyTag.appendChild(bracketOpenTag);
   keyTag.classList.add('rf-row');
+  keyTag.classList.add('rf-row--collapse');
+  keyTag.addEventListener('click', (event) => {
+    event.target.querySelector('.rf-collapse').classList.toggle('rf-collapse--open');
+    event.target.parentNode.querySelector('.rf-content').classList.toggle('rf-content--close');
+  })
   columnTag.appendChild(keyTag);
   return columnTag;
 }
