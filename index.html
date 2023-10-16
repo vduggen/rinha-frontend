@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rinha Frontend</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .rf-main {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .rf-main .rf-title {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .rf-main .rf-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 24px 0;
+        }
+
+        .rf-main .rf-button {
+            height: 36px;
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            padding-right: 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #1867c0;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .rf-main .rf-button>img {
+            width: 18px;
+            margin-left: 12px;
+            margin-right: 8px;
+        }
+
+        .rf-main .rf-button::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            opacity: 0;
+            left: 0;
+            transition: opacity .2s cubic-bezier(.4, 0, .6, 1);
+        }
+
+        .rf-main .rf-button:hover::before {
+            opacity: calc(0.04 * 2);
+        }
+
+        .rf-main #rf-upload {
+            opacity: 0;
+        }
+
+        .rf-main #home,
+        .rf-main #read {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .rf-main #read {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="rf-main">
+        <div id="home">
+            <h1 class="rf-title">JSON Tree Viewer</h1>
+            <h2 class="rf-subtitle">Simple JSON Viewer that runs completely on-client. No data exchange </h2>
+            <button class="rf-button" onclick="openUpload()">
+                <img src="./upload.svg" alt="Icone Upload">
+                Load JSON
+            </button>
+            <input type="file" id="rf-upload" accept=".json" />
+        </div>
+
+        <div id="read">
+            
+        </div>
+    </main>
+
+    <script>
+        function openUpload() {
+            document.getElementById('rf-upload').click();
+        }
+
+        function changeTab(contentFile) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('read').style.display = 'flex';
+            document.querySelector('#read pre').innerText = contentFile;
+        }
+
+        document.getElementById('rf-upload').addEventListener('change', async (e) => {
+            const fileReader = new FileReader();
+            fileReader.onload = function () {
+                console.log(JSON.parse(fileReader.result));
+                changeTab(fileReader.result);
+            }
+            fileReader.readAsText(e.target.files[0]);
+        });
+    </script>
+</body>
+
+</html>
