@@ -86,6 +86,32 @@
 
         .rf-main #read {
             display: none;
+            max-width: 400px;
+            align-items: flex-start;
+            margin: 0 auto;
+        }
+
+        .rf-main #read #rf-content {
+            margin-left: 18px;
+        }
+
+        .rf-main #read .rf-attribute {
+            display: flex;
+            column-gap: 8px;
+            color: #4E9590;
+        }
+
+        .rf-main #read .rf-value {
+            color: #000;
+        }
+
+        .rf-main #read .rf-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .rf-main #read .rf-bracket {
+            color: #F2CAB8;
         }
     </style>
 </head>
@@ -103,7 +129,17 @@
         </div>
 
         <div id="read">
-            
+            <div class="rf-title"></div>
+
+            <div class="rf-bracket">
+                {
+            </div>
+            <div id="rf-content">
+
+            </div>
+            <div class="rf-bracket">
+                }
+            </div>
         </div>
     </main>
 
@@ -112,18 +148,64 @@
             document.getElementById('rf-upload').click();
         }
 
+        function generateUniqueID() {
+            const timestamp = Date.now().toString(36); // Converte o timestamp para base 36
+            const randomNum = Math.random().toString(36).substr(2, 5); // Gera um número aleatório e o converte para base 36
+            return `${timestamp}-${randomNum}`;
+        }
+
+        function createAttributeTag() {
+            const attributeTag = document.createElement('div');
+            attributeTag.classList.add('rf-attribute');
+            return attributeTag;
+        }
+
+        function createKeyTag(text) {
+            const keyTag = document.createElement('span');
+            keyTag.classList.add('rf-key');
+            keyTag.innerText = `${text}:`;
+            return keyTag;
+        }
+
+        function createValueTag(text) {
+            const valueTag = document.createElement('span');
+            valueTag.classList.add('rf-value');
+            let textFormatted = text;
+            if (typeof text === "string") {
+                textFormatted = `"${text}"`
+            }
+            valueTag.innerText = `${textFormatted}`;
+            return valueTag;
+        }
+
+        let beforeElement = null;
+
+        function renderTreeView(json) {
+            for (const node in json) {
+                const attributeTag = createAttributeTag();
+                
+                const keyTag = createKeyTag(node);
+                const valueTag = createValueTag(json[node]);
+
+                attributeTag.appendChild(keyTag);
+                attributeTag.appendChild(valueTag);
+
+                document.querySelector('#read #rf-content').appendChild(attributeTag);
+            }
+        }
+
         function changeTab(contentFile) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('read').style.display = 'flex';
-            document.querySelector('#read pre').innerText = contentFile;
         }
 
         document.getElementById('rf-upload').addEventListener('change', async (e) => {
             const fileReader = new FileReader();
             fileReader.onload = function () {
-                console.log(JSON.parse(fileReader.result));
                 changeTab(fileReader.result);
+                renderTreeView(JSON.parse(fileReader.result));
             }
+            document.querySelector('.rf-main #read .rf-title').innerText = e.target.files[0].name;
             fileReader.readAsText(e.target.files[0]);
         });
     </script>
