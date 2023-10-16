@@ -18,61 +18,7 @@
         }
 
         .rf-main {
-            width: 100vw;
             height: 100vh;
-        }
-
-        .rf-main .rf-title {
-            font-size: 48px;
-            font-weight: 700;
-        }
-
-        .rf-main .rf-subtitle {
-            font-size: 24px;
-            font-weight: 400;
-            margin: 24px 0;
-        }
-
-        .rf-main .rf-button {
-            height: 36px;
-            display: flex;
-            align-items: center;
-            padding-left: 0;
-            padding-right: 16px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            background-color: #1867c0;
-            color: #fff;
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .rf-main .rf-button>img {
-            width: 18px;
-            margin-left: 12px;
-            margin-right: 8px;
-        }
-
-        .rf-main .rf-button::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            opacity: 0;
-            left: 0;
-            transition: opacity .2s cubic-bezier(.4, 0, .6, 1);
-        }
-
-        .rf-main .rf-button:hover::before {
-            opacity: calc(0.04 * 2);
-        }
-
-        .rf-main #rf-upload {
-            opacity: 0;
         }
 
         .rf-main #home,
@@ -83,54 +29,10 @@
             justify-content: center;
             flex-direction: column;
         }
-
-        .rf-main #read {
-            display: none;
-            max-width: 400px;
-            align-items: flex-start;
-            margin: 0 auto;
-        }
-
-        .rf-main #read .rf-content {
-            padding-left: 16px;
-            margin: 5px 0 5px 2px;
-            border-left: 1px solid #BFBFBF;
-        }
-
-        .rf-main #read .rf-attribute {
-            display: flex;
-            column-gap: 8px;
-            color: #4E9590;
-        }
-
-        .rf-main #read .rf-attribute--column {
-            flex-direction: column;
-        }
-
-        .rf-main #read .rf-attribute .rf-scope .rf-content,
-        .rf-main #read .rf-content--column {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .rf-main #read .rf-key--row {
-            display: flex;
-            column-gap: 8px;
-        }
-
-        .rf-main #read .rf-value {
-            color: #000;
-        }
-
-        .rf-main #read .rf-title {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .rf-main #read .rf-bracket {
-            color: #F2CAB8;
-        }
     </style>
+
+    <link rel="stylesheet" href="./home.css">
+    <link rel="stylesheet" href="./json-tree.css">
 </head>
 
 <body>
