@@ -1,0 +1,16 @@
+* {
+  font-family: "Inter", sans-serif;
+}
+
+.rf-main {
+  height: 100vh;
+}
+
+.rf-main #home,
+.rf-main #read {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
