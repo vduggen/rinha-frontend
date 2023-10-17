@@ -25,7 +25,7 @@ function loadFileReader(fileReader) {
     return false;
   }
   changeTab(fileReader.result);
-  const objStructure = createStructure(document.getElementById("json-tree"));
+  const objStructure = createStructure(document.getElementById("json-tree"), Array.isArray(jsonParsed) ? bracketsTypes.ARRAY : bracketsTypes.JSON);
   renderJsonTree(jsonParsed, objStructure.contentTag);
 }
 

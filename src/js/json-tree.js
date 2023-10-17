@@ -67,8 +67,8 @@ function createBracketClose(bracketType = bracketsTypes.JSON) {
 }
 
 function createBracket(bracketType = bracketsTypes.JSON) {
-  const bracketArrayOpenTag = createBracketOpen();
-  const bracketArrayCloseTag = createBracketClose();
+  const bracketArrayOpenTag = createBracketOpen(bracketType);
+  const bracketArrayCloseTag = createBracketClose(bracketType);
   return {
     bracketArrayOpenTag,
     bracketArrayCloseTag,
