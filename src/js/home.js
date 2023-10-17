@@ -15,6 +15,8 @@ function changeTab() {
   document.getElementById("json-tree").style.display = "flex";
 }
 
+let toRender = null;
+
 function loadFileReader(fileReader) {
   let jsonParsed = {};
   try {
@@ -28,6 +30,9 @@ function loadFileReader(fileReader) {
   let bracketType = bracketsTypes.JSON;
   if (Array.isArray(jsonParsed)) {
     bracketType = bracketsTypes.ARRAY;
+    console.log(jsonParsed);
+    jsonParsed = jsonParsed.slice(0, 10);
+    toRender = jsonParsed.slice(10);
   }
   const objStructure = createStructure(document.getElementById("json-tree"), bracketType);
   renderJsonTree(jsonParsed, objStructure.contentTag);
