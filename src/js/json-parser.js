@@ -68,11 +68,15 @@ function createScopeElement() {
 function getElementToAppend() {}
 
 function renderRowByRow(rows, scopeElement) {
+	const copiaRows = [...rows];
 	let arrScopes = [scopeElement];
 	let scopeElementLocal = scopeElement;
-	for (const row of rows) {
+	copiaRows.forEach((row, index) => {
 		console.log(row);
-		if (["[", "{"].includes(row.trim()[0])) {
+		if (row.trim() === "[{") {
+			copiaRows.splice(index + 1, 0, "[");
+			copiaRows.splice(index + 2, 0, "{");
+		} else if (["[", "{"].includes(row.trim()[0])) {
 			const element = getElementByValue(row);
 			scopeElementLocal.appendChild(element);
 			const contentElement = createContentElement();
@@ -99,5 +103,5 @@ function renderRowByRow(rows, scopeElement) {
 			const element = getElementByValue(row);
 			scopeElementLocal.appendChild(element);
 		}
-	}
+	});
 }
