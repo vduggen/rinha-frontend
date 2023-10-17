@@ -35,7 +35,7 @@ function createRowElement() {
 }
 
 function getElementByValue(value) {
-	const isBracket = ["[", "]", "{", "}"].includes(value.trim());
+	const isBracket = ["[", "]", "],", "{", "}", "},"].includes(value.trim());
 	if (isBracket) {
 		const rowElement = createRowElement();
 		const bracketElement = createBracketElement(value);
@@ -74,10 +74,10 @@ function renderRowByRow(rows, scopeElement) {
 		console.log(row);
 		if (["[", "{"].includes(row.trim()[0])) {
 			const element = getElementByValue(row);
-			scopeElement.appendChild(element);
+			scopeElementLocal.appendChild(element);
 			const contentElement = createContentElement();
 			arrScopes.push(contentElement);
-			scopeElement.appendChild(contentElement);
+			scopeElementLocal.appendChild(contentElement);
 			scopeElementLocal = contentElement;
 		} else if (["]", "}"].includes(row.trim()[0])) {
 			const element = getElementByValue(row);
