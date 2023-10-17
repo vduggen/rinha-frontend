@@ -1,5 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
-  getInputUpload().addEventListener("change", (event) => changeInputUpload(event));
+  getInputUpload().addEventListener("change", (event) =>
+    changeInputUpload(event)
+  );
 });
 
 function getInputUpload() {
@@ -30,27 +32,63 @@ function loadFileReader(fileReader) {
   let bracketType = bracketsTypes.JSON;
   if (Array.isArray(jsonParsed)) {
     bracketType = bracketsTypes.ARRAY;
-    console.log(jsonParsed);
+    toRender = JSON.stringify(jsonParsed.slice(10));
     jsonParsed = jsonParsed.slice(0, 10);
-    toRender = jsonParsed.slice(10);
   }
-  const objStructure = createStructure(document.getElementById("json-tree"), bracketType);
+  const objStructure = createStructure(
+    document.getElementById("json-tree"),
+    bracketType
+  );
   renderJsonTree(jsonParsed, objStructure.contentTag);
+  var meuElemento = document.querySelector(".rf-scope");
+
+  meuElemento.addEventListener("scroll", function () {
+    // Verifica se o usuário está perto do final do elemento
+    const height = document.querySelector(
+      ".rf-scope > .rf-content > .rf-column:last-child"
+    ).clientHeight;
+    const metade = height / 2;
+    const height2 = height + metade;
+    if (
+      meuElemento.scrollTop + meuElemento.clientHeight >=
+      meuElemento.scrollHeight - height2
+    ) {
+      let json = null;
+      const toRenderParsed = JSON.parse(toRender);
+      if (Array.isArray(toRenderParsed)) {
+        const copia1 = [ ...toRenderParsed ];
+        const copia2 = [ ...toRenderParsed ];
+        json = copia1.slice(0, 10);
+        toRender = JSON.stringify(copia2.slice(10));
+      }
+      renderJsonTree(json, objStructure.contentTag);
+    }
+  });
 }
 
 function setTitle(nameFile) {
   document.querySelector(".rf-main #json-tree .rf-title").innerText = nameFile;
 }
 
+function getFirstKeyJSON(rows) {
+  for (const row of rows) {
+    console.log(row);
+  }
+}
+
 function changeInputUpload(event) {
   const fileReader = new FileReader();
   fileReader.onload = function () {
-    loadFileReader(fileReader);
+    const rows = String.fromCharCode.apply(null, new Int8Array(fileReader.result.slice(0, 50000)))
+      .replaceAll('\t', ' ')
+      .split('\n');
+    getFirstKeyJSON(rows)
+    // loadFileReader(fileReader);
   };
   const arrFiles = event.target.files;
   if (arrFiles && arrFiles.length > 0) {
     const objFirstFile = arrFiles[0];
     setTitle(objFirstFile.name);
-    fileReader.readAsText(objFirstFile);
+    fileReader.readAsArrayBuffer(objFirstFile);
   }
 }
