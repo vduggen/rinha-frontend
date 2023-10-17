@@ -11,6 +11,7 @@
   padding-left: 16px;
   margin: 5px 0 5px 2px;
   border-left: 1px solid #bfbfbf;
+  transition: ease-in-out .1s;
 }
 
 .rf-main #json-tree .rf-content--close {
@@ -29,6 +30,12 @@
   column-gap: 8px;
   padding: 2px;
   cursor: default;
+}
+
+.rf-main #json-tree .rf-content:hover,
+.rf-main #json-tree .rf-row:hover + .rf-content,
+.rf-main #json-tree .rf-content--hover  {
+	border-color: #808080;
 }
 
 .rf-main #json-tree .rf-row--collapse {
