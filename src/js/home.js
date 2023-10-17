@@ -25,7 +25,11 @@ function loadFileReader(fileReader) {
     return false;
   }
   changeTab(fileReader.result);
-  const objStructure = createStructure(document.getElementById("json-tree"), Array.isArray(jsonParsed) ? bracketsTypes.ARRAY : bracketsTypes.JSON);
+  let bracketType = bracketsTypes.JSON;
+  if (Array.isArray(jsonParsed)) {
+    bracketType = bracketsTypes.ARRAY;
+  }
+  const objStructure = createStructure(document.getElementById("json-tree"), bracketType);
   renderJsonTree(jsonParsed, objStructure.contentTag);
 }
 
