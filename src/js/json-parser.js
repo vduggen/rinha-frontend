@@ -65,8 +65,6 @@ function createScopeElement() {
 	return createElementWithClassname("rf-scope");
 }
 
-function getElementToAppend() {}
-
 function renderRowByRow(rows, scopeElement) {
 	const copiaRows = [...rows];
 	let arrScopes = [scopeElement];
