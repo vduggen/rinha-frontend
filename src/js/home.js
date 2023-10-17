@@ -56,8 +56,8 @@ function loadFileReader(fileReader) {
       let json = null;
       const toRenderParsed = JSON.parse(toRender);
       if (Array.isArray(toRenderParsed)) {
-        const copia1 = [ ...toRenderParsed ];
-        const copia2 = [ ...toRenderParsed ];
+        const copia1 = [...toRenderParsed];
+        const copia2 = [...toRenderParsed];
         json = copia1.slice(0, 10);
         toRender = JSON.stringify(copia2.slice(10));
       }
@@ -70,20 +70,18 @@ function setTitle(nameFile) {
   document.querySelector(".rf-main #json-tree .rf-title").innerText = nameFile;
 }
 
-function getFirstKeyJSON(rows) {
-  for (const row of rows) {
-    console.log(row);
-  }
-}
-
 function changeInputUpload(event) {
   const fileReader = new FileReader();
   fileReader.onload = function () {
-    const rows = String.fromCharCode.apply(null, new Int8Array(fileReader.result.slice(0, 50000)))
-      .replaceAll('\t', ' ')
-      .split('\n');
-    getFirstKeyJSON(rows)
+    const rows = String.fromCharCode
+      .apply(null, new Int8Array(fileReader.result.slice(0, 5000)))
+      .replaceAll("\t", " ")
+      .split("\n");
+	const scopeElement = createScopeElement();
+	document.getElementById("json-tree").appendChild(scopeElement);
+    renderRowByRow(rows, scopeElement);
     // loadFileReader(fileReader);
+    changeTab();
   };
   const arrFiles = event.target.files;
   if (arrFiles && arrFiles.length > 0) {
