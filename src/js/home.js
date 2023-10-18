@@ -70,13 +70,26 @@ function setTitle(nameFile) {
   document.querySelector(".rf-main #json-tree .rf-title").innerText = nameFile;
 }
 
+let arrayBuffer = null;
+let startIndex = 0;
+let endIndex = 500;
+
+function getRows() {
+	console.log(arrayBuffer);
+	const rows = String.fromCharCode
+      .apply(null, new Int8Array(arrayBuffer.slice(startIndex, endIndex)))
+      .replaceAll("\t", " ")
+      .split("\n");
+	startIndex += 500 - 50;
+	endIndex += 500;
+	return rows;
+}
+
 function changeInputUpload(event) {
   const fileReader = new FileReader();
   fileReader.onload = function () {
-    const rows = String.fromCharCode
-      .apply(null, new Int8Array(fileReader.result.slice(0, 5000)))
-      .replaceAll("\t", " ")
-      .split("\n");
+	arrayBuffer = fileReader.result;
+    const rows = getRows();
 	const scopeElement = createScopeElement();
 	document.getElementById("json-tree").appendChild(scopeElement);
     renderRowByRow(rows, scopeElement);

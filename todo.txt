@@ -1,0 +1,8 @@
+- Fazer validação
+- Fazer parser de JSON que não estão com quebras de linhas
+- [x] Fazer lazy loading
+- [x] Ao pegar uma parte do JSON do array buffer o final tem que ser um atributo completo
+- Fazer recursão para subjsons/arrays
+- Ver para arrumar codificação
+- Verificar possiveis repetições, caso o json tiver 2 valores parecidos um embaixo do outro, quando for fazer o lazy loading
+- Ele está dando problema no pokedex.json no lazy loading pois ele está pegando no ultimo caractere o "],"
