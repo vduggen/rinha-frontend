@@ -28,16 +28,16 @@ Irei utilizar a técnica de lazy loading, é renderizar uma área que usuário v
 
 ### Irei separar em 2 partes:
 
-1. Interpretador
+1. Parser
 2. Renderização HTML
 
-### Interpretador
+### Parser
 Tem a função de entender o que é aquele caractere e retornar se deve ser renderizado ou não.
 
 Caso deve ser renderizado deve retornar qual token é.
 
 ### Renderização HTML
-Tem a função de entender o token retornado pelo interpretador e renderizar de acordo com o que foi retornado.
+Tem a função de entender o token retornado pelo Parser e renderizar de acordo com o que foi retornado.
 
 **Tokens:**
 - Chave de abertura
