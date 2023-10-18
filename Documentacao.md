@@ -45,6 +45,9 @@ Tem a função de entender o token retornado pelo Parser e renderizar de acordo 
 - Valor
 - Chave de fechamento
 
+### Validação
+Vai ser feito uma validação parcial conforme for sendo carregado.
+
 # Testes
 - Montar uma árvore virtual onde vai montando todos os elementos e renderiza no final quando terminar.
 - Ir renderizando conforme for passando por cada caractere.
