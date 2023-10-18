@@ -58,24 +58,33 @@ function renderProperty(contentElement, key, value) {
 }
 
 function recursive(arrChildren = [], contentElement) {
+	let bracketType = bracketTypes.JSON;
 	for (const objChildren of arrChildren) {
-		if (objChildren.type === "Property") {
+		if (objChildren.type === nodeTypes.PROPERTY) {
 			const rowElement = createRowElement();
 			const keyElement = createKeyElement(objChildren.key.raw);
 			rowElement.appendChild(keyElement);
 			contentElement.appendChild(rowElement);
-			if (objChildren.value.type === "Object") {
-				const bracketElement = createBracketElement("{");
+			if (objChildren.value.type === nodeTypes.OBJECT || objChildren.value.type === nodeTypes.ARRAY) {
+				bracketType = objChildren.value.type === nodeTypes.OBJECT ? bracketTypes.JSON : bracketTypes.ARRAY;
+				const bracketElement = createBracketElement(bracketType.open);
 				rowElement.appendChild(bracketElement);
 				const contentElementChild = createContentElement();
 				contentElement.appendChild(contentElementChild);
 				for (const objChildren2 of objChildren.value.children) {
-					renderProperty(contentElementChild, objChildren2.key.raw, objChildren2.value.raw);
+					if (objChildren2.type === nodeTypes.PROPERTY) {
+						renderProperty(contentElementChild, objChildren2.key.raw, objChildren2.value.raw);
+					}
+					if (objChildren2.type === nodeTypes.OBJECT) {
+						const contentElement = createContentElement();
+						contentElementChild.appendChild(contentElement);
+						recursive(objChildren2.children, contentElement);
+					}
 				}
 			}
 		}
 	}
-	const bracketElement = createBracketElement("}");
+	const bracketElement = createBracketElement(bracketType.close);
 	contentElement.appendChild(bracketElement);
 }
 
@@ -83,29 +92,16 @@ function onLoadFileReader2() {
 	changeDisplayElements();
 	const jsonAst = jsonToAst(this.result);
 	console.log(jsonAst);
-	const scopeElement = createScopeElement();
-	document.getElementById("json-tree").appendChild(scopeElement);
-	if (jsonAst.type === "Object") {
-		const bracketElement = createBracketElement("{");
-		scopeElement.appendChild(bracketElement);
-		const contentElement = createContentElement();
-		scopeElement.appendChild(contentElement);
-		// for (const objChildren of jsonAst.children) {
-		// 	if (objChildren.type === "Property") {
-		// 		const rowElement = createRowElement();
-		// 		const keyElement = createKeyElement(objChildren.key.raw);
-		// 		rowElement.appendChild(keyElement);
-		// 		if (objChildren.value.type === "Object") {
-		// 			const bracketElement = createBracketElement("{");
-		// 			rowElement.appendChild(bracketElement);
-		// 		}
-		// 		contentElement.appendChild(rowElement);
-		// 	}
-		// }
-		recursive(jsonAst.children, contentElement);
-		const bracketElement2 = createBracketElement("}");
-		scopeElement.appendChild(bracketElement2);
-	}
+	// if (jsonAst.type === nodeTypes.OBJECT) {
+	// 	const bracketElement = createBracketElement("{");
+		// scopeElement.appendChild(bracketElement);
+		// const contentElement = createContentElement();
+		// scopeElement.appendChild(contentElement);
+		// recursive(jsonAst.children, contentElement);
+		// const bracketElement2 = createBracketElement("}");
+		// scopeElement.appendChild(bracketElement2);
+	// }
+	bootstrap(jsonAst);
 }
 
 function changeInputUpload(event) {
