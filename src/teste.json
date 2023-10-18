@@ -1,36 +1,3 @@
 {
-	"nome": "John Doe",
-	"idade": 30,
-	"cores_favoritas": [
-		"azul",
-		"verde",
-		"vermelho"
-	],
-	"sexo": null,
-	"endereco": {
-		"rua": "Rua Principal",
-		"cidade": "Cidade Exemplo",
-		"estado": "Estado Exemplo",
-		"cep": "12345-678"
-	},
-	"testes": {
-		"name": {
-			"english": "Bulbasaur",
-			"japanese": "フシギダネ",
-			"chinese": "妙蛙种子",
-			"french": "Bulbizarre"
-		},
-		"type": [
-			"Grass",
-			"Poison"
-		],
-		"base": {
-			"HP": 45,
-			"Attack": 49,
-			"Defense": 49,
-			"Sp. Attack": 65,
-			"Sp. Defense": 65,
-			"Speed": 45
-		}
-	}
+	"teste_with_space": "hello world"
 }
