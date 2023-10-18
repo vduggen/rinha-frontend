@@ -82,19 +82,27 @@ function getRows() {
       .split("\n");
 	startIndex += 500 - 50;
 	endIndex += 500;
-	return rows;
+	return arrayBuffer;
 }
 
 function changeInputUpload(event) {
   const fileReader = new FileReader();
   fileReader.onload = function () {
 	arrayBuffer = fileReader.result;
-    const rows = getRows();
+    // const rows = getRows();
 	const scopeElement = createScopeElement();
 	document.getElementById("json-tree").appendChild(scopeElement);
-    renderRowByRow(rows, scopeElement);
+    // renderRowByRow(rows, scopeElement);
     // loadFileReader(fileReader);
     changeTab();
+	const arraySliced = [];
+	new Int8Array(arrayBuffer).forEach((element, index) => {
+		if (index >= startIndex && index <= endIndex) {
+			arraySliced[index] = element;
+		}
+	});
+	tokenizacao(arraySliced, scopeElement);
+
   };
   const arrFiles = event.target.files;
   if (arrFiles && arrFiles.length > 0) {

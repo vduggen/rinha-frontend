@@ -2,42 +2,75 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rinha Frontend</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rinha Frontend</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css">
 
-    <link rel="stylesheet" href="./src/styles/generic.css">
-    <link rel="stylesheet" href="./src/styles/home.css">
-    <link rel="stylesheet" href="./src/styles/json-tree.css">
+	<link rel="stylesheet" href="./src/styles/generic.css">
+	<link rel="stylesheet" href="./src/styles/home.css">
+	<link rel="stylesheet" href="./src/styles/json-tree.css">
 
-    <script src="./src/js/json-parser.js"></script>
-    <script src="./src/js/home.js"></script>
-    <script src="./src/js/json-tree.js"></script>
+	<script src="./src/js/json-parser.js"></script>
+	<script src="./src/js/json-parser2.js"></script>
+	<script src="./src/js/home.js"></script>
+	<script src="./src/js/json-tree.js"></script>
 </head>
 
 <body>
-    <main class="rf-main">
-        <div id="home">
-            <h1 class="rf-title">JSON Tree Viewer</h1>
-            <h2 class="rf-subtitle">Simple JSON Viewer that runs completely on-client. No data exchange </h2>
-            <button class="rf-button" onclick="openUpload()">
-                <img src="./src/assets/upload.svg" alt="Icone Upload">
-                Load JSON
-            </button>
-            <p id="rf-error" class="rf-error--hidden">Invalid file. Please load a valid JSON file.</p>
-            <input type="file" id="rf-upload" accept=".json" />
-        </div>
+	<main class="rf-main">
+		<div id="home">
+			<h1 class="rf-title">JSON Tree Viewer</h1>
+			<h2 class="rf-subtitle">Simple JSON Viewer that runs completely on-client. No data exchange </h2>
+			<button class="rf-button" onclick="openUpload()">
+				<img src="./src/assets/upload.svg" alt="Icone Upload">
+				Load JSON
+			</button>
+			<p id="rf-error" class="rf-error--hidden">Invalid file. Please load a valid JSON file.</p>
+			<input type="file" id="rf-upload" accept=".json" />
+		</div>
 
-        <div id="json-tree">
-            <div class="rf-title"></div>
-        </div>
-    </main>
+		<div id="json-tree">
+			<div class="rf-title">teste.json</div>
+			<div class="rf-scope">
+				<div class="rf-row">
+					<div class="rf-bracket">{</div>
+				</div>
+				<div class="rf-content">
+					<div class="rf-row">
+						<div class="rf-key">"Chave1:"</div>
+						<div class="rf-bracket">{</div>
+					</div>
+					<div class="rf-content">
+						<div class="rf-row">
+							<div class="rf-key">"Chave2"</div>
+							<div class="rf-bracket">{</div>
+						</div>
+						<div class="rf-content">
+							<div class="rf-row">
+								<div class="rf-key">"Chave2:"</div>
+								<div class="rf-value">Valor</div>
+							</div>
+						</div>
+						<div class="rf-row">
+							<div class="rf-bracket">}</div>
+						</div>
+					</div>
+					<div class="rf-row">
+						<div class="rf-bracket">}</div>
+					</div>
+				</div>
+				<div class="rf-row">
+					<div class="rf-bracket">}</div>
+				</div>
+			</div>
+		</div>
+	</main>
 </body>
 
 </html>
