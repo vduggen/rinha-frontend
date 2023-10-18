@@ -19,6 +19,17 @@
 
 # Ideias
 
+### Fluxo
+
+1. Ler arquivo feito upload
+1. Utilizar método readAsArrayBuffer do File Reader.
+1. Guardar em uma variável esse Array Buffer
+1. Pegar uma parte do array buffer (Fiz utilizando forEach pois com slice eu perco os indices).
+1. Mando para o Parser
+1. Parser cria uma AST
+1. Percorro o AST e renderizo em uma DOM Virtual esses elementos
+1. Renderizo o HTML da DOM Virtual
+
 ### Leitura do arquivo
 
 Irei utilizar o File Reader uma api do navegador, irei utilizar o método readAsArrayBuffer onde ele transforma os caracteres em um array buffer.
