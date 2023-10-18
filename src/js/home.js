@@ -48,15 +48,6 @@ function onLoadFileReader() {
 
 import jsonToAst from 'https://cdn.jsdelivr.net/npm/json-to-ast@2.1.0/+esm'
 
-function renderProperty(contentElement, key, value) {
-	const rowElement = createRowElement();
-	const keyElement = createKeyElement(key);
-	rowElement.appendChild(keyElement);
-	const valueElement = createValueElement(value);
-	rowElement.appendChild(valueElement);
-	contentElement.appendChild(rowElement);
-}
-
 function onLoadFileReader2() {
 	changeDisplayElements();
 	const jsonAst = jsonToAst(this.result, {
