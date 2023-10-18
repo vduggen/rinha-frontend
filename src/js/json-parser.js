@@ -94,7 +94,9 @@ function renderRowByRow(rows, scopeElement) {
 			} else if (["]", "}"].includes(row.trim()[0])) {
 				const element = getElementByValue(row);
 				const newArrScopes = arrScopes.slice(0, arrScopes.length - 1);
-				newArrScopes.at(-1).appendChild(element);
+				if (newArrScopes.length >= 1) {
+					newArrScopes.at(-1).appendChild(element);
+				}
 				arrScopes = newArrScopes;
 				scopeElementLocal = newArrScopes.at(-1);
 			} else if (row.split(":").length > 1) {
