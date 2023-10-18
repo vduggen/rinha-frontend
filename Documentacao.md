@@ -25,6 +25,7 @@
 1. Utilizar método readAsArrayBuffer do File Reader.
 1. Guardar em uma variável esse Array Buffer
 1. Pegar uma parte do array buffer (Fiz utilizando forEach pois com slice eu perco os indices).
+	- Utilizo Web Worker
 1. Mando para o Parser
 1. Parser cria uma AST
 1. Percorro o AST e renderizo em uma DOM Virtual esses elementos
@@ -300,3 +301,10 @@ Final JSON
 	</div>
 </div>
 ```
+# Aprendizados
+
+- Web Worker
+- Parser
+- Abstract Syntax Tree - AST
+- Array Buffer
+- Leitura de arquivos no frontend (File Reader)
