@@ -18,7 +18,11 @@ const fileContent = ref("");
 const fileReader = new FileReader();
 
 function onload() {
-  fileContent.value = this.result.replaceAll('\n', '')
+  fileContent.value = this.result
+    .replaceAll('\n', '')
+    .replaceAll('\r', '')
+    .replaceAll(' ', '')
+    .replaceAll('\t', '');
 }
 
 function setFile(newFile) {
